@@ -1,0 +1,9 @@
+.item-actions {
+  gap: 5px;
+  display: flex;
+  padding: 5px;
+}
+
+.add-item {
+  padding: 10px;
+}

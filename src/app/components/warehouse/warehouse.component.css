@@ -1,0 +1,9 @@
+.warehouse-actions {
+  gap: 5px;
+  display: flex;
+  padding: 5px;
+}
+
+.add-warehouse {
+  padding: 10px;
+}

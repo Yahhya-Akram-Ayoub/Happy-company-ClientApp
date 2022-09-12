@@ -1,0 +1,12 @@
+.dashboard-tabs {
+  gap: 5px;
+  display: flex;
+  padding: 5px;
+}
+.dashboard-tabs a {
+  cursor: pointer;
+}
+
+.add-warehouse {
+  padding: 10px;
+}

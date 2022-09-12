@@ -1,0 +1,9 @@
+.user-actions {
+  gap: 5px;
+  display: flex;
+  padding: 5px;
+}
+
+.add-user {
+  padding: 10px;
+}

@@ -1,0 +1,93 @@
+<form
+  autocomplete="false"
+  name="form"
+  (ngSubmit)="f.form.valid && onSubmit()"
+  #f="ngForm"
+  novalidate
+>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input
+      type="tesxt"
+      autocomplete="off"
+      class="form-control"
+      name="name"
+      [(ngModel)]="item.name"
+      required
+      #name="ngModel"
+    />
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="name.errors && f.submitted"
+    >
+      name is required!
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="skU_Code">SKU Code</label>
+    <input
+      type="text"
+      autocomplete="false"
+      class="form-control"
+      name="skU_Code"
+      [(ngModel)]="item.skU_Code"
+      #skU_Code="ngModel"
+    />
+  </div>
+  <div class="form-group">
+    <label for="qty">Qty</label>
+    <input
+      type="number"
+      autocomplete="false"
+      class="form-control"
+      name="qty"
+      min="1"
+      [(ngModel)]="item.qty"
+      required
+      #qty="ngModel"
+    />
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="qty.errors && f.submitted"
+    >
+      <div *ngIf="qty.errors['required']">Qty is required</div>
+      <div *ngIf="qty.errors['min']">qty must be at least 1</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="msrP_Price">MSRP Price</label>
+    <input
+      type="number"
+      autocomplete="false"
+      class="form-control"
+      name="msrP_Price"
+      [(ngModel)]="item.msrP_Price"
+      #msrP_Price="ngModel"
+    />
+  </div>
+  <div class="form-group">
+    <label for="cost_Price">Cost Price</label>
+    <input
+      type="number"
+      autocomplete="false"
+      class="form-control"
+      name="cost_Price"
+      [(ngModel)]="item.cost_Price"
+      required
+      #cost_Price="ngModel"
+    />
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="cost_Price.errors && f.submitted"
+    >
+      Cost Price is required!
+    </div>
+  </div>
+  <div class="form-group d-flex align-items-center justify-content-centers">
+    <button class="btn btn-primary btn-block w-100 mt-2">Save</button>
+  </div>
+</form>

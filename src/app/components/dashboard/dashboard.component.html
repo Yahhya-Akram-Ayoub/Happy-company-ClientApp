@@ -1,0 +1,87 @@
+<ul class="nav nav-pills dashboard-tabs">
+  <li class="nav-item" (click)="changeTab(0)">
+    <a class="nav-link {{ currentTab == 0 && 'active' }} ">Wherhouses</a>
+  </li>
+  <li class="nav-item" (click)="changeTab(1)">
+    <a class="nav-link  {{ currentTab == 1 && 'active' }} ">Items</a>
+  </li>
+</ul>
+
+<table class="table table-bordered w-100" *ngIf="currentTab == 0">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Inventory count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let warehouse of warehouses">
+      <td>{{ warehouse.warehouse }}</td>
+      <td>{{ warehouse.count }}</td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered w-100" *ngIf="currentTab == 1">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">
+        Qty
+        <a *ngIf="Asc" (click)="asc()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-arrow-down-short"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+        </a>
+        <a *ngIf="!Asc" (click)="asc()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-arrow-up-short"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
+            />
+          </svg>
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td>{{ item.name }}</td>
+      <td>{{ item.qty }}</td>
+    </tr>
+  </tbody>
+</table>
+<nav aria-label="Page navigation example" *ngIf="Pages > 1">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {{ Page === 1 && 'disabled' }}">
+      <a class="page-link" (click)="getwarehouses(Page - 1)">Previous</a>
+    </li>
+    <li class="page-item" *ngFor="let _page of createRange(Pages)">
+      <a
+        class="page-link {{ _page === Page && 'active' }}"
+        (click)="getwarehouses(_page)"
+      >
+        {{ _page }}
+      </a>
+    </li>
+    <li class="page-item {{ Page === Pages && 'disabled' }}">
+      <a class="page-link" (click)="getwarehouses(Page + 1)">Next</a>
+    </li>
+  </ul>
+</nav>

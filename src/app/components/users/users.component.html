@@ -1,0 +1,159 @@
+<div class="add-user" *ngIf="role === 'Admin'">
+  <button [routerLink]="['/user/add']" type="button" class="btn btn-primary">
+    add user
+  </button>
+</div>
+<table class="table table-bordered w-100">
+  <thead>
+    <tr>
+      <th scope="col">name</th>
+      <th scope="col">email</th>
+      <th scope="col">role</th>
+      <th scope="col" *ngIf="role === 'Admin'">actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.fullName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+      <td class="user-actions" *ngIf="role === 'Admin'">
+        <button
+          type="button"
+          class="btn btn-info"
+          [routerLink]="['/user/edit', user.id]"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="openPasswordModal(content2, user.id)"
+        >
+          Change Password
+        </button>
+        <button
+          *ngIf="user.role !== 'Admin'"
+          type="button"
+          class="btn btn-danger"
+          (click)="openDeleteModal(content, user)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<nav aria-label="Page navigation example" *ngIf="Pages > 1">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {{ Page === 1 && 'disabled' }}">
+      <a class="page-link" (click)="getUsers(Page - 1)">Previous</a>
+    </li>
+    <li class="page-item" *ngFor="let _page of createRange(Pages)">
+      <a
+        class="page-link {{ _page === Page && 'active' }}"
+        (click)="getUsers(_page)"
+      >
+        {{ _page }}
+      </a>
+    </li>
+    <li class="page-item {{ Page === Pages && 'disabled' }}">
+      <a class="page-link" (click)="getUsers(Page + 1)">Next</a>
+    </li>
+  </ul>
+</nav>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Are you sure to delete?</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>{{ UserDeleted.fullName }}</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="deleteUser(UserDeleted.id); d('Cross click')"
+    >
+      Delete
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #content2 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">change password</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <form
+    name="form"
+    (ngSubmit)="f.form.valid && submitChangePass()"
+    #f="ngForm"
+    novalidate
+  >
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="currPass">current password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="currPass"
+          [(ngModel)]="form.currPass"
+          required
+          #currPass="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="currPass.errors && f.submitted"
+        >
+          <div *ngIf="currPass.errors['required']">
+            current password is required
+          </div>
+          <div *ngIf="currPass.errors['minlength']">
+            current password must be at least 6 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="newPass">new password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="newPass"
+          [(ngModel)]="form.newPass"
+          required
+          minlength="6"
+          #newPass="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="newPass.errors && f.submitted"
+        >
+          <div *ngIf="newPass.errors['required']">new Password is required</div>
+          <div *ngIf="newPass.errors['minlength']">
+            new password must be at least 6 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="form-group d-flex align-items-center justify-content-centers">
+        <button class="btn btn-primary btn-block w-100 mt-2">Save</button>
+      </div>
+    </div>
+  </form>
+</ng-template>
